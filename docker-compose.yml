@@ -1,0 +1,27 @@
+# ./docker/frontend内のdockerファイルを参照するdokcercomposeファイル
+
+# docker-composeのバージョン
+{
+  "version": "3",
+  # サービス毎の設定
+  "services": {
+    # サービス名を指定
+    "frontend": {
+      # dockerfileの場所を指定
+      "build": {
+        "context": "./frontend",
+        "dockerfile": "Dockerfile"
+      },
+      # ポート番号を設定
+      "ports": [
+        "3000:3000"
+      ],
+      # ファイルをマウントする
+      "volumes": [
+        "./frontend:/frontend"
+      ],
+      "stdin_open": true,
+      "tty": true
+    }
+  }
+}

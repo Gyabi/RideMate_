@@ -1,0 +1,7 @@
+{
+    "name" : "RideMate frontend",
+    "dockerComposeFile" : ["../docker-compose.yml"],
+    "service" : "frontend",
+    "workspaceFolder" : "/frontend",
+    "shutdownAction" : "none" 
+}
