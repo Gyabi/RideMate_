@@ -5,7 +5,8 @@ import Image from "next/image"
 
 export default function RideMateHeader() {
     return (
-    <nav className="flex items-center justify-between p-4">
+    // ヘッダーの背景は白に設定
+    <nav className="flex items-center justify-between p-4 bg-white">
         {/* 左によったlinkを作成 */}
         <div className="flex items-center">
             <Link href="/" className="flex items-center">

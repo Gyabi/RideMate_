@@ -17,8 +17,13 @@ export default function RootLayout({
     return (
       <html lang="ja">
         <body className={inter.className}>
-          <RideMateHeader/>
-          {children}
+          {/* 全体背景色設定 */}
+          <div className='min-h-screen bg-gray-100'>
+            <RideMateHeader/>
+            <div className="main-container">
+              {children}
+            </div>
+          </div>
         </body>
       </html>
     )

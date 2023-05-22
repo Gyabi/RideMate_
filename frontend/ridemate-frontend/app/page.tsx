@@ -2,7 +2,7 @@ import Default from "./default/page"
 
 export default function Home() {
   return (
-    <div>
+    <div className="">
       <Default/>
     </div>
   )
