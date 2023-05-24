@@ -16,9 +16,12 @@ export default function RootLayout({
 }) {
     return (
       <html lang="ja">
+        <head>
+          <script src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
+        </head>
         <body className={inter.className}>
           {/* 全体背景色設定 */}
-          <div className='min-h-screen bg-gray-100'>
+          <div className='min-h-screen bg-gray-100 flex flex-col'>
             <RideMateHeader/>
             <div className="main-container">
               {children}
