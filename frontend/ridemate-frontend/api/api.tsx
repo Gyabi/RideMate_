@@ -50,7 +50,21 @@ export async function getLatestItems() : Promise<ItemHeader[]> {
         new ItemHeader("id8", "title8", "2021-10-01", "author3"),
         new ItemHeader("id9", "title9", "2021-10-01", "author4"),
         new ItemHeader("id10", "title10", "2021-10-01", "author5"),
+        new ItemHeader("id11", "title11", "2021-10-01", "author1"),
+        new ItemHeader("id12", "title12", "2021-10-01", "author2"),
+        new ItemHeader("id13", "title13", "2021-10-01", "author3"),
+        new ItemHeader("id14", "title14", "2021-10-01", "author4"),
+        new ItemHeader("id15", "title15", "2021-10-01", "author5"),
+        
     ];
 
     return dummyData;
 }
+
+// データを登録
+export async function postItem(title: string, content: string, author: string){
+    // アイテム生成
+    const item = new Item("id", title, content, "2021-10-01", "2021-10-01", author);
+    console.log(item);
+}
+
