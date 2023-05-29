@@ -21,7 +21,7 @@ export default function MarkdownView(props: { titleInput : string, onTitleInputC
                     <textarea className='w-full  h-full border border-gray-300 p-2 rounded-md' value={props.contentInput} onChange={props.onContentInputChange}/>
                 </div>
                 <div className='w-1/2 '>
-                    <div className="znc w-full h-full break-all border-2 border-gray-300 rounded-md p-2" dangerouslySetInnerHTML={{ __html: html }}></div>
+                    <div className="znc w-full h-full break-all border-2 border-gray-300 rounded-md p-2 overflow-auto" dangerouslySetInnerHTML={{ __html: html }}></div>
                 </div>
             </div>
         </div>
