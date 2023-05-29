@@ -1,10 +1,21 @@
-import Link from "next/link"
+import { getLatestItems } from "@/api/api"
+import ItemList from "@/components/list/itemList";
+import { ItemHeader } from "@/api/data";
 
-export default function Default() {
+export default async function Default() {
+  // 最新のデータを取得してリスト表示
+  let datas:ItemHeader[] = [];
+
+  await getLatestItems().then((items) => {
+    datas = items;
+  });
+
+
   return (
-    // 入力ボックスとボタンを設けて、ボタンを押すとitem/入力内容に遷移する
-    <div>
-      {/* <Link href="/search">Search</Link> */}
+    <div className="flex flex-col justify-center">
+      <div className="py-3 flex flex-col justify-center items-center">
+        <ItemList items={datas} />
+      </div>
     </div>
-  )
+  )     
 }

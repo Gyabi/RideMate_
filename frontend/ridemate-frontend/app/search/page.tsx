@@ -3,7 +3,7 @@
 import { useState } from "react";
 import getItemHeadersByKeyword from "@/api/api";
 import { ItemHeader } from "@/api/data";
-import SearchedItem from "@/components/searchedItem/searchedItem";
+import ItemList from "@/components/list/itemList";
 
 export default function Search() {
     const [input, setInput] = useState<string>("");
@@ -31,11 +31,7 @@ export default function Search() {
             </div>
 
             <div className="py-3 flex flex-col justify-center items-center">
-                <div className="grid grid-cols-2 gap-4 w-2/3">
-                    {items.map((item) => {
-                        return  <SearchedItem key={item.id} item={item} />
-                    })}
-                </div>
+                <ItemList items={items} />
             </div>
         </div>
     )
