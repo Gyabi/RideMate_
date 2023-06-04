@@ -1,0 +1,54 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  getItem(id: ID!): Item
+  getItems: [Item]
+  getAccount(id: ID!): Account
+  getAccounts: [Account]
+}
+
+type Mutation {
+  createItem(input: CreateItemInput!): Item
+  updateItem(id: ID!, input: UpdateItemInput!): Item
+  deleteItem(id: ID!): Boolean!
+  createAccount(input: CreateAccountInput!): Account
+  updateAccount(id: ID!, input: UpdateAccountInput!): Account
+  deleteAccount(id: ID!): Boolean!
+}
+
+type Item {
+  id: ID!
+  title: String!
+  content: String!
+  accountId: ID!
+  updatedAt: String!
+  createdAt: String!
+}
+
+type Account {
+  id: ID!
+  username: String!
+}
+
+input CreateItemInput {
+  title: String!
+  content: String!
+  accountId: ID!
+}
+
+input UpdateItemInput {
+  title: String
+  content: String
+  accountId: ID
+}
+
+input CreateAccountInput {
+  username: String!
+}
+
+input UpdateAccountInput {
+  username: String
+}

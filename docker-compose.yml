@@ -22,6 +22,21 @@
       ],
       "stdin_open": true,
       "tty": true
+    },
+
+    "backend" : {
+      "build": {
+        "context": "./backend",
+        "dockerfile": "Dockerfile"
+      },
+      "ports": [
+        "8080:8080"
+      ],
+      "volumes": [
+        "./backend:/backend"
+      ],
+      "stdin_open": true,
+      "tty": true
     }
   }
 }

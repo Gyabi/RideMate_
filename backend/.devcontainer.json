@@ -1,0 +1,11 @@
+// go言語用の設定ファイル
+{
+    "name" : "RideMate backend",
+    "dockerComposeFile" : ["../docker-compose.yml"],
+    "service" : "backend",
+    "workspaceFolder" : "/backend",
+    "shutdownAction" : "none" ,
+    "extensions": [
+        "golang.go"
+    ]
+}
