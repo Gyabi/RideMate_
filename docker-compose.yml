@@ -37,6 +37,21 @@
       ],
       "stdin_open": true,
       "tty": true
+    },
+
+    "db" : {
+      "build": {
+        "context": "./db",
+        "dockerfile": "Dockerfile"
+      },
+      "ports": [
+        "5432:5432"
+      ],
+      "volumes": [
+        "./db:/db"
+      ],
+      "stdin_open": true,
+      "tty": true
     }
   }
 }

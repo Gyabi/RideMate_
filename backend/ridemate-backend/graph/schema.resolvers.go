@@ -6,58 +6,190 @@ package graph
 
 import (
 	"context"
-	"fmt"
+	"ridemate-backend/db"
 	"ridemate-backend/graph/model"
+	"time"
+
+	"github.com/google/uuid"
 )
 
 // CreateItem is the resolver for the createItem field.
 func (r *mutationResolver) CreateItem(ctx context.Context, input model.CreateItemInput) (*model.Item, error) {
-	panic(fmt.Errorf("not implemented: CreateItem - createItem"))
+	// UUIDを用いてIDを振ったItemを作成、DBにアクセスし保存
+	item := &model.Item{
+		ID:        uuid.New().String(),
+		Title:     input.Title,
+		Content:   input.Content,
+		AccountID: input.AccountID,
+		UpdatedAt: time.Now().GoString(),
+		CreatedAt: time.Now().GoString(),
+	}
+
+	// DBに保存
+	if err := r.client.InsertItem(db.ItemDB{
+		ID:        item.ID,
+		Title:     item.Title,
+		Content:   item.Content,
+		AccountID: item.AccountID,
+		UpdatedAt: item.UpdatedAt,
+		CreatedAt: item.CreatedAt,
+	}); err != nil {
+		return nil, err
+	}
+
+	return item, nil
 }
 
 // UpdateItem is the resolver for the updateItem field.
 func (r *mutationResolver) UpdateItem(ctx context.Context, id string, input model.UpdateItemInput) (*model.Item, error) {
-	panic(fmt.Errorf("not implemented: UpdateItem - updateItem"))
+	// DBにアクセスして更新
+	preData, err := r.client.GetItem(id)
+	if err != nil {
+		return nil, err
+	}
+
+	item, err := r.client.UpdateItem(db.ItemDB{
+		ID:        id,
+		Title:     *input.Title,
+		Content:   *input.Content,
+		AccountID: *input.AccountID,
+		UpdatedAt: time.Now().GoString(),
+		CreatedAt: preData.CreatedAt,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Item{
+		ID:        item.ID,
+		Title:     item.Title,
+		Content:   item.Content,
+		AccountID: item.AccountID,
+		UpdatedAt: item.UpdatedAt,
+		CreatedAt: item.CreatedAt,
+	}, nil
 }
 
 // DeleteItem is the resolver for the deleteItem field.
 func (r *mutationResolver) DeleteItem(ctx context.Context, id string) (bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteItem - deleteItem"))
+	// DBにアクセスして削除
+	if err := r.client.DeleteItem(id); err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
 
 // CreateAccount is the resolver for the createAccount field.
 func (r *mutationResolver) CreateAccount(ctx context.Context, input model.CreateAccountInput) (*model.Account, error) {
-	panic(fmt.Errorf("not implemented: CreateAccount - createAccount"))
+	account := &model.Account{
+		ID:       uuid.New().String(),
+		Username: input.Username,
+	}
+
+	if err := r.client.InsertAccount(db.AccountDB{
+		ID:       account.ID,
+		Username: account.Username,
+	}); err != nil {
+		return nil, err
+	}
+
+	return account, nil
 }
 
 // UpdateAccount is the resolver for the updateAccount field.
 func (r *mutationResolver) UpdateAccount(ctx context.Context, id string, input model.UpdateAccountInput) (*model.Account, error) {
-	panic(fmt.Errorf("not implemented: UpdateAccount - updateAccount"))
+	err := r.client.UpdateAccount(db.AccountDB{
+		ID:       id,
+		Username: *input.Username,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Account{
+		ID:       id,
+		Username: *input.Username,
+	}, nil
 }
 
 // DeleteAccount is the resolver for the deleteAccount field.
 func (r *mutationResolver) DeleteAccount(ctx context.Context, id string) (bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteAccount - deleteAccount"))
+	if err := r.client.DeleteAccount(id); err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
 
 // GetItem is the resolver for the getItem field.
 func (r *queryResolver) GetItem(ctx context.Context, id string) (*model.Item, error) {
-	panic(fmt.Errorf("not implemented: GetItem - getItem"))
+	item, err := r.client.GetItem(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Item{
+		ID:        item.ID,
+		Title:     item.Title,
+		Content:   item.Content,
+		AccountID: item.AccountID,
+		UpdatedAt: item.UpdatedAt,
+		CreatedAt: item.CreatedAt,
+	}, nil
 }
 
 // GetItems is the resolver for the getItems field.
 func (r *queryResolver) GetItems(ctx context.Context) ([]*model.Item, error) {
-	panic(fmt.Errorf("not implemented: GetItems - getItems"))
+	items, err := r.client.GetItems()
+	if err != nil {
+		return nil, err
+	}
+
+	var res []*model.Item
+	for _, item := range items {
+		res = append(res, &model.Item{
+			ID:        item.ID,
+			Title:     item.Title,
+			Content:   item.Content,
+			AccountID: item.AccountID,
+			UpdatedAt: item.UpdatedAt,
+			CreatedAt: item.CreatedAt,
+		})
+	}
+
+	return res, nil
 }
 
 // GetAccount is the resolver for the getAccount field.
 func (r *queryResolver) GetAccount(ctx context.Context, id string) (*model.Account, error) {
-	panic(fmt.Errorf("not implemented: GetAccount - getAccount"))
+	account, err := r.client.GetAccount(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Account{
+		ID:       account.ID,
+		Username: account.Username,
+	}, nil
 }
 
 // GetAccounts is the resolver for the getAccounts field.
 func (r *queryResolver) GetAccounts(ctx context.Context) ([]*model.Account, error) {
-	panic(fmt.Errorf("not implemented: GetAccounts - getAccounts"))
+	accounts, err := r.client.GetAccounts()
+	if err != nil {
+		return nil, err
+	}
+
+	var res []*model.Account
+	for _, account := range accounts {
+		res = append(res, &model.Account{
+			ID:       account.ID,
+			Username: account.Username,
+		})
+	}
+
+	return res, nil
 }
 
 // Mutation returns MutationResolver implementation.

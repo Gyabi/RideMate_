@@ -1,0 +1,7 @@
+{
+    "name" : "RideMate db",
+    "dockerComposeFile" : ["../docker-compose.yml"],
+    "service" : "db",
+    "workspaceFolder" : "/db",
+    "shutdownAction" : "none" 
+}
